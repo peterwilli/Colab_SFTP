@@ -1,0 +1,6 @@
+#!/bin/sh
+echo Please enter the key given to you by Colab:
+read ssh_key
+docker exec colab_sftp sh -c "mkdir -p ~/.ssh && echo '$ssh_key' >> ~/.ssh/authorized_keys"
+docker restart colab_sftp
+echo "Restarting the sftp Docker... You should be ok!"

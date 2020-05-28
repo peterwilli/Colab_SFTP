@@ -4,7 +4,7 @@ When working with Google Colab, we're used to mounting Google Drive to persist a
 
 However, as I noticed during my research, the storage quickly adds up and causes problems, there's nothing worse than having a trained model finished, only to find out the runtime restarted and the model didn't persist in Drive.
 
-I didn't want to buy more storage, as I barely use Google Drive anyway, aside for it being a "gateway" where I download the model to my own computer.
+I didn't want to buy more storage, as I barely use Google Drive anyway, aside for it being a "gateway" where I download the model to my own computer and on top of that, you need to have your computer connected to Colab anyway if you want the runtime to run for longer, so why not use the connection to your PC you already have?!
 
 This made me look for an alternative, where instead of mounting a folder on Google Drive, I could mount a folder that is synced locally with a folder on my own PC.
 
@@ -27,7 +27,7 @@ We also assume you can forward the SSH port `2222` to your local device, should 
 - `cd` to the repo you just cloned.
 - Run the first script: `./build`
 - Run `./run` to start the SFTP server. A new directory called `data/` is made, this is where your files are synced.
-- In your Colab notebook, make a code block and execute the following: `!sh -c "$(curl -fsSL todo)"`
+- In your Colab notebook, make a code block and execute the following: `!sh -c "$(curl -fsSL https://raw.githubusercontent.com/peterwilli/Colab_SFTP/master/Colab/init.sh)"`
 - After you're done, you get a key that you need to paste in your terminal on your PC to authenticate Colab.
     - Run `./authenticate` and paste the key.
 - In Colab, make a new code block, and paste: `!mount_colab_sftp <your ip>`. You can find [your IP adress here](https://duckduckgo.com/?q=my+ip).

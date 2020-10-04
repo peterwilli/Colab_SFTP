@@ -4,8 +4,7 @@ init()
     mkdir -p /content/ssh
     apt-get install -y sshfs
     cat /dev/zero | ssh-keygen -b 4096 -q -N ""
-    echo "sshfs -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@\$1:/root -p \${2:-2222} /content/ssh\necho 'Mounted /content/ssh'" > /usr/bin/mount_colab_sftp
-    echo "umount /content/ssh" > /usr/bin/unmount_colab_sftp
+    echo "sshfs -C -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@\$1:/root -p \${2:-2222} /content/ssh\necho 'Mounted /content/ssh'" > /usr/bin/mount_colab_sftp
     chmod a+x /usr/bin/mount_colab_sftp
     chmod a+x /usr/bin/unmount_colab_sftp
 }

@@ -1,2 +1,5 @@
 #!/bin/sh
+# make sure that the old key(s) are removed
+docker exec colab_sftp sh -c "rm ~/.ssh/authorized_keys"
+# remove and stop the container
 docker rm -f colab_sftp

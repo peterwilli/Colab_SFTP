@@ -8,9 +8,19 @@ init()
     else
         cat /dev/zero | ssh-keygen -b 4096 -q -N ""
     fi
-    echo "sshfs -C -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@\$1:/root -p \${2:-2222} /content/ssh\necho 'Mounted /content/ssh'" > /usr/bin/mount_colab_sftp
+
+    cat > /usr/bin/mount_colab_sftp << "EOL"
+sleep_seconds=5
+until error=$(sshfs -C -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$1:/root -p ${2:-2222} /content/ssh 2>&1 >/dev/null); do
+    error_str="Error: $error.\nWill try again in $sleep_seconds seconds!"
+    error_len=${#error_str}
+    echo -e $error_str
+    sleep $sleep_seconds
+    printf '\b%.0s' $(seq 1 $error_len)
+done
+echo 'Mounted /content/ssh'
+EOL
     chmod a+x /usr/bin/mount_colab_sftp
-    chmod a+x /usr/bin/unmount_colab_sftp
 }
 init > /dev/null 2>&1
 
